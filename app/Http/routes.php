@@ -18,3 +18,16 @@ Route::get('/', function () {
 Route::auth();
 
 Route::get('/home', 'HomeController@index');
+
+//For option page
+Route::get('option','System\OptionController@index');
+Route::get('option/create','System\OptionController@create');
+Route::post('option/store','System\OptionController@store');
+// Route::resource('option', 'System\OptionController');
+
+
+// Database ==
+Route::controller('datatables', 'DatatablesController', [
+    'anyData'  => 'datatables.data',
+    'getIndex' => 'datatables',
+]);

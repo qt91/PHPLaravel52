@@ -5,7 +5,7 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateOptionsTable extends Migration
 {
-    var $tableName = 'options';
+    var $model;
     /**
      * Run the migrations.
      *
@@ -13,12 +13,15 @@ class CreateOptionsTable extends Migration
      */
     public function up()
     {
-        Schema::create($this->tableName,function(Blueprint $table){
-            $table  ->increments('id')
-                    ->string('name')
-                    ->longText('value')
-                    ->enum('type',['text','json','number','select'])
-                    ->enum('autoload',['yes','no']);
+        $this->model = new App\Models\Option();
+        
+        Schema::create($this->model->tableName,function(Blueprint $table){
+            foreach ($this->model->getColumns() as $value) {
+                switch ($action) {
+                    case 'enum': $table->$value->type($value->name, $value->data); break;
+                    default: $table->$value->type($value->name); break;
+                }
+            }
         });
     }
 
@@ -29,6 +32,6 @@ class CreateOptionsTable extends Migration
      */
     public function down()
     {
-        Schema::drop($this->$tableName);
+        Schema::drop($this->model->tableName);
     }
 }
