@@ -1,15 +1,16 @@
 <?php
 
-namespace App\Http\Controllers\System;
+namespace App\Http\Controllers\Category;
 
 use Validator;
-use App\Http\Requests;
 use Illuminate\Http\Request;
+
+use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-use \App\Models\Option as Option;
+use \App\Models\Categories as Categories;
 
-class OptionController extends Controller
+class CategoryController extends Controller
 {
     //
     var $data;
@@ -17,9 +18,10 @@ class OptionController extends Controller
     
     public function __construct(){
         $this->data = array();
-        $url = array('storePath'=>url('/option/store'));
+        $url = array('storePath'=>url('/category/store'));
         $this->data['url'] = (object)$url;
-        $this->model = new Option();
+        
+        $this->model = new Categories();
     }
     
     //Display all Option
@@ -55,7 +57,7 @@ class OptionController extends Controller
             
             //Store option object
             
-            $option = new Option();
+            $option = new Categories();
             foreach($this->model->getColumns(__FUNCTION__) as $value){
                 $property = $value->name;
                 $option->$property = $request->input($value->name);
@@ -63,7 +65,7 @@ class OptionController extends Controller
             $option->save();
         }
         //End validation
-        return redirect('option/create')->with('msg', 'Store success');
+        return redirect('category/create')->with('msg', 'Store success');
     }
     
     //GET /options/id
@@ -84,5 +86,4 @@ class OptionController extends Controller
     public function destroy($id){
         
     }
-    
 }

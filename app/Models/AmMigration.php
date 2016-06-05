@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateOptionsTable extends Migration
+class AmMigration extends Migration
 {
     var $model;
     /**
@@ -11,16 +11,15 @@ class CreateOptionsTable extends Migration
      *
      * @return void
      */
-    public function up()
+    public function to_up($model)
     {
-        $this->model = new App\Models\Option();
+        $this->model = $model;//new App\Models\Option();
         
         Schema::create($this->model->tableName,function(Blueprint $table){
             foreach ($this->model->getColumns() as $value) {
-                $action = $value->type;
                 switch ($action) {
-                    case 'enum': $table->$action($value->name, $value->data); break;
-                    default: $table->$action($value->name); break;
+                    case 'enum': $table->$value->type($value->name, $value->data); break;
+                    default: $table->$value->type($value->name); break;
                 }
             }
         });
@@ -32,8 +31,8 @@ class CreateOptionsTable extends Migration
      *
      * @return void
      */
-    public function down()
+    public function to_down($tableName)
     {
-        Schema::drop($this->model->tableName);
+        Schema::drop($tableName);
     }
 }

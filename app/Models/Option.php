@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Option extends Model
+class Option extends AmModel
 {
     /**
      * The table associated with the model.
@@ -39,31 +39,5 @@ class Option extends Model
         );
     
     
-    /**
-     * Get column info
-     */
-    public function getColumns($action = 'index'){
-        $result = array();
-        foreach ($this->columns as $value) {
-            if(isset($value['vAction'])){
-                if($value['vAction'] == ''){
-                    $result[] = (object)$value;
-                }else{
-                    if(strpos($value['vAction'], $action) !== false){
-                        $result[] = (object)$value;   
-                    }   
-                }    
-            }
-        }
-        return $result;
-    }
     
-    public function getColumnsValidation($action = 'index'){
-        $result = array();
-        $data = $this->getColumns($action);
-        foreach ($data as $value) {
-            $result[$value->name] = $value->validation;
-        }
-        return $result;
-    }
 }

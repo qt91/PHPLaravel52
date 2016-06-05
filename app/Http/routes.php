@@ -23,10 +23,19 @@ Route::get('/home', 'HomeController@index');
 Route::get('option','System\OptionController@index');
 Route::get('option/create','System\OptionController@create');
 Route::post('option/store','System\OptionController@store');
+
+//For category
+Route::get('category','Category\CategoryController@index');
+Route::get('category/create','Category\CategoryController@create');
+Route::post('category/store','Category\CategoryController@store');
+
+
 // Route::resource('option', 'System\OptionController');
 
 
 // Database ==
+// Route::get('datatables','DatatablesController@getIndex');
+// Route::get('datatables/data','DatatablesController@anydata');
 Route::controller('datatables', 'DatatablesController', [
     'anyData'  => 'datatables.data',
     'getIndex' => 'datatables',

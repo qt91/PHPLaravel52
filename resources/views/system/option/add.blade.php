@@ -1229,8 +1229,21 @@
                                 @endif
                                 
 
-                                <form id="formAdd" class="form-horizontal" name="form4" role="form" method="POST" action="{{ url('/option/store') }}">
-                                    {{ csrf_field() }} @foreach($modelInfo->columns as $value) @if($value->type == "string")
+                                <form id="formAdd" class="form-horizontal" name="form4" role="form" method="POST" action="{{ $url->storePath }}">
+                                    {{ csrf_field() }} 
+                                    
+                                    @foreach($modelInfo->columns as $value) 
+                                    
+                                    @if($value->type == "integer")
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">{{ $value->vName }}</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" name="{{ $value->name }}" class="form-control" placeholder="{{ $value->vName }}" value="{{Request::old($value->name)}}">
+                                        </div>
+                                    </div>
+                                    @endif
+                                    
+                                    @if($value->type == "string")
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">{{ $value->vName }}</label>
                                         <div class="col-sm-9">

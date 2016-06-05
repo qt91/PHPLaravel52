@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateOptionsTable extends Migration
+class CreateCategorymetaTable extends Migration
 {
     var $model;
     /**
@@ -13,7 +13,7 @@ class CreateOptionsTable extends Migration
      */
     public function up()
     {
-        $this->model = new App\Models\Option();
+        $this->model = new App\Models\Categorymeta();
         
         Schema::create($this->model->tableName,function(Blueprint $table){
             foreach ($this->model->getColumns() as $value) {
@@ -23,9 +23,12 @@ class CreateOptionsTable extends Migration
                     default: $table->$action($value->name); break;
                 }
             }
+            
+            if(isset($this->model->timestamps) && $this->model->timestamps){
+                $table->timestamps();    
+            }
         });
     }
-    
 
     /**
      * Reverse the migrations.
@@ -34,6 +37,6 @@ class CreateOptionsTable extends Migration
      */
     public function down()
     {
-        Schema::drop($this->model->tableName);
+        $Schema::drop($model->tableName);
     }
 }
